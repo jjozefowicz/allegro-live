@@ -1,5 +1,5 @@
 # allegro-live
-Small demo created for training purposes.
+Small demo created for training purposes: fetch info about recently purchased offers and show its location on Google Maps.
 
 Before use, you have to edit allegro account params in server.js file. 
 
