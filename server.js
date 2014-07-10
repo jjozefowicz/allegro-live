@@ -39,19 +39,11 @@ allegro.createClient(allegroOptions, function (err, client) {
 	});
 });
 
-	// Do not register new listener for all connected clients, one is enough for all
-	// if (emitter.listeners('itemPurchased').length == 0) {
-		emitter.on('itemPurchased', function(item) {
-
-			// Push event to client
-			socket.emit('purchase', item);
-		});
-	// }	
-
 // When item is purchased send info to connected clients
-socket.on('connection', function(incomingSocket) {
+emitter.on('itemPurchased', function(item) {
 
-
+	// Push event to client
+	socket.emit('purchase', item);
 });
 
 http.listen(3000);
