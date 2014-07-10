@@ -1,13 +1,18 @@
+/**
+ * Request google map marker
+ */
 function requestMarker(item) {
 	$.getJSON('http://maps.google.com/maps/api/geocode/json?address=' + item.location, function(data) {
 		if (typeof data.results[0] !== "undefined" 
-			&& typeof data.results[0].geometry != "undefined" 
-			&& typeof data.results[0].geometry.location != "undefined"
+			&& typeof data.results[0].geometry !== "undefined" 
+			&& typeof data.results[0].geometry.location !== "undefined"
 		) {
 			
 			var markerOptions = {
-			    position: new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng),
-			    title: "Oferta: (" + item.id + ") " + item.name
+			    position: new google.maps.LatLng(
+			    	data.results[0].geometry.location.lat, 
+			    	data.results[0].geometry.location.lng),
+			    title: "Miasto: " + item.location + "\nOferta: (" + item.id + ") " + item.name
 			};
 						
 			var marker = new google.maps.Marker(markerOptions);
@@ -16,21 +21,25 @@ function requestMarker(item) {
 	});
 }
 
+/**
+ * Create google map
+ */
 function createMap() {
 	var mapOptions = {
 		center: new google.maps.LatLng(51.9690921, 19.0830736),
 		zoom: 6
 	};
 
-	var map = new google.maps.Map(document.getElementById('map-canvas'),
-	  mapOptions);
+	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	return map;
 }
 
 
 
-
+/** 
+ * Initialize function - callback on google maps load
+ */
 function initialize() {
 	var socket = io();
 	var map = createMap();
@@ -42,15 +51,14 @@ function initialize() {
 			obj.marker.setMap(map);
 		});
 
-		$('ul#items').prepend('<li><a href="https://allegro.pl/show_item.php?item=' + item.id + '" target="_blank">' + item.name + '</a> (' + item.location + ')</li>');
+		$('ul#items').prepend('<li><a href="http://allegro.pl/show_item.php?item=' + item.id + '" target="_blank">(' + item.id + ') ' + item.name + '</a> (' + item.location + ')</li>');
 	});
 }
 
 function loadScript() {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&' +
-      'callback=initialize';
+  script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initialize';
   document.body.appendChild(script);
 }
 
