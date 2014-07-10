@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "allegro": "^0.2.2",
+    "express": "^4.5.1",
+    "soap": "^0.4.7",
+    "socket.io": "^1.0.6"
+  }
+}
